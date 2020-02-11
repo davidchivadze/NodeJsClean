@@ -6,12 +6,9 @@ module.exports={
         if(token){     
             jwt.verify(token,'qwe123',(err,decoded)=>{
                 if(err){
-                   return res.json({
-                        success:0,
-                        message:err
-                    })
+                   return res.status(401).send('Unauthorized')
                 }else{  
-                    console.log(decoded);               
+                   
                     next();
                 }
             })
@@ -32,6 +29,7 @@ module.exports={
                     message:err
                 })
             }else{  
+                console.log(decoded);
                if(decoded.roles.includes("Admin")){
                              
                 next();

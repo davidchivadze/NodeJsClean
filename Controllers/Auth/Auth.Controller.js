@@ -2,7 +2,7 @@ import Login from '../../Models/Auth/Login.Model'
 import mysqlConnection from '../../Domain/Connection/Connection';
 import * as authService from '../../Services/Auth/Auth.Service';
 import crypto from 'crypto'
-import { response } from 'express';
+import e, { response } from 'express';
 var jwt = require('jsonwebtoken');
 export const registration=async(req,res,next)=>{
         const body=req.body;
@@ -40,16 +40,33 @@ export const login=async(req,res,next)=>{
             
                if(result!==undefined){
                if(result.Password==crypto.createHash("MD5").update(body.Password).digest("hex")){
-                  
-                const jsonToken=jwt.sign({user:response,roles:["Admin","Editor"]},"qwe123",{
-                    expiresIn:"1h"
-                })
+                  var user=result;
+                  var roles=null;
+                  authService.getUserRoles(result.ID,(err,result)=>{
+                        if(err){
+                            return res.status(500).json({
+                                success:0,
+                                message:err
+                            });
+                        }else{
+                            console.log(result.length);
+                             roles=new Array();
+                            for(var i=0;i<result.length;i++){
+                                roles.push(result[i].Description)
+                            }
+                            const jsonToken=jwt.sign({user:user,roles:roles},"qwe123",{
+                                expiresIn:"1h"
+                            })
+            
+                            res.status(200).json({
+                                success:1,
+                                message:"login succesfully",
+                                token:jsonToken
+                            })
+                           
+                        }
+                  })
 
-                res.status(200).json({
-                    success:1,
-                    message:"login succesfully",
-                    token:jsonToken
-                })
                }else{
                    res.status(200).json({
                        success:0,

@@ -40,6 +40,16 @@ module.exports={
                return callback(null,result[0]);
            }
        })
+   },
+   getUserRoles:(UserID,callback)=>{
+       var query="SELECT `roles`.`Description` FROM `users` INNER  JOIN `userroles`  ON `users`.`ID`=`userroles`.UserID INNER JOIN `roles` ON `roles`.`ID`=`userroles`.`RoleID` WHERE `users`.`ID`=?";
+       mysqlConnection.query(query,[UserID],(error,result,fields)=>{
+           if(error){
+               return callback(error)
+           }else{
+               return callback(null,result);
+           }
+       })
    }
 
 }
