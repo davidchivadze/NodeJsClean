@@ -31,11 +31,13 @@ app.use(bodyParser.urlencoded({extended:true}))
 //     res.header( 'Access-Control-Allow-Headers','Content-Type')
 //     next()
 // })
+
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/swagger',swaggerUi.serve,swaggerUi.setup(swaggerDocs));
 app.use('/api',ApiRoutes);
+
 
 app.get("/customers",(req,res)=>{
     res.send("Test Customers");

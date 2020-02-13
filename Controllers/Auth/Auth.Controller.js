@@ -61,7 +61,8 @@ export const login=async(req,res,next)=>{
                             res.status(200).json({
                                 success:1,
                                 message:"login succesfully",
-                                token:jsonToken
+                                token:jsonToken,
+                                userName:user.Email
                             })
                            
                         }
@@ -130,7 +131,9 @@ export const GetUserByID=async(req,res,next)=>{
         }
     })
 }
+export const GetAuthorizedUser=async(req,res,next)=>{
 
+}
 // export const login=async(req,res,next)=>{
 //     var data="asdASD123";
 //     crypto.createHash('MD5').update(data).digest("hex");
