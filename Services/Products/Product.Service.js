@@ -12,10 +12,12 @@ function SetProductImages(product,Images){
 
 module.exports={
     SaveProduct:(body,callback)=>{
-        var query="INSERT INTO `products`(`product_categories_id`, `title`, `short_description`, `full_description`, `imageURLs`, `Count`, `price`, `CurrencyID`) VALUES (?,?,?,?,?,?,?,?)";
+        var query="INSERT INTO `products`(`product_categories_id`, `title`, `short_description`, `full_description`, `Count`, `price`, `CurrencyID`) VALUES (?,?,?,?,?,?,?)";
         var insertImagesQuery="INSERT INTO `product_images` (`Image`,`ProductID`) VALUES(?,?)";
-        mysqlConnection.query(query,[body.CategorieID,body.Title,body.ShortDescription,body.FullDescription,body.ImageURLs,body.Count,body.Price,body.CurrencyID],(err,result)=>{
+   
+        mysqlConnection.query(query,[body.CategorieID,body.Title,body.ShortDescrption,body.FullDescription,body.Count,body.Price,body.Currency],(err,result)=>{
             if(err){
+                console.log(err);
                  return callback(error)
             }else{
 
@@ -54,7 +56,7 @@ module.exports={
         // console.log(ProductID,Image);
         var query="INSERT INTO `product_images` (`Image`,`ProductID`) VALUES(?,?)";
         mysqlConnection.query(query,[Image,parseInt(ProductID)],(err,result)=>{
-            console.log(err);
+         
         if(err){
             return callback(err)
         }else{

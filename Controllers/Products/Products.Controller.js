@@ -9,6 +9,7 @@ function SetImagesReturnResultValue(product, images) {
 
 export const AddProduct = async (req, res, next) => {
     var body = req.body;
+    console.log(body);
     ProductService.SaveProduct(body, (err, result) => {
         if (err) {
             return res.status(500).json({
@@ -17,6 +18,7 @@ export const AddProduct = async (req, res, next) => {
             })
         } else {
             new Promise((resolve,reject)=>{
+             
                 for(var i=0;i<body.Images.length;i++){
                 ProductService.AddProductImage(result.insertId,body.Images[i],(err,resultImage)=>{
           
@@ -31,6 +33,7 @@ export const AddProduct = async (req, res, next) => {
                 })
             }
             }).then((message)=>{
+                console.log(message);
                 return res.status(200).json({
                     success: 1,
                     message: "Successfully Add"
@@ -48,6 +51,7 @@ export const AddProduct = async (req, res, next) => {
 };
 export const GetAllProduct = async (req, res, next) => {
     var body = req.query;
+    console.log(body);
     const returnResult = [];
     ProductService.GetAllProducts(body, (err, result) => {
         if (err) {
