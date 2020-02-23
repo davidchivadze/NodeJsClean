@@ -6,5 +6,6 @@ const routes=new Router();
 
 routes.post('/addNewProduct',Auth.HasAdminRole,ProductsController.AddProduct);
 routes.get('/getAllProducts',ProductsController.GetAllProduct);
+routes.post('/GetEditProduct',Auth.HasAdminRole,ProductsController.GetEditProduct);
 
 module.exports=routes;

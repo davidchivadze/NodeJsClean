@@ -81,7 +81,7 @@ export const GetAllProduct = async (req, res, next) => {
                 });
         })
     addElementsToForeach.then(()=>{
-        console.log(returnResult);
+       
         return res.status(200).json({
             success: 1,
             products: returnResult,
@@ -90,5 +90,41 @@ export const GetAllProduct = async (req, res, next) => {
 
 
 }
+     })
+ }
+ export const GetEditProduct=async(req,res,next)=>{
+     const product=null;
+
+     new Promise((resolve,reject)=>{
+         ProductService.GetEditProduct(req.body.ProductID,(err,result)=>{
+             if(err){
+                reject(err);
+             }else{            
+                resolve(result);
+             }
+         })
+       
+     }).then((result)=>{
+   
+         new Promise((resolve,reject)=>{
+          
+             ProductService.GetProductImages(result.ID,(err,response)=>{
+                 if(err){
+                     reject(err);
+                 }else{
+                    
+                     resolve(response);
+                 }
+             });
+         }).then((imagesResult)=>{
+             result.Images=imagesResult;
+            
+             return res.status(200).json({success:1,product:result});
+         }).catch((err)=>{
+         
+             throw err;
+         })
+     }).catch((err)=>{       
+         return res.status(500).json({success:0,Error:err})
      })
  }

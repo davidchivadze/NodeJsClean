@@ -41,7 +41,7 @@ module.exports={
         })
     },
     GetProductImages:(productID,callback)=>{
-        let query="SELECT `Image` FROM `product_images` WHERE `ProductID`=?";
+        let query="SELECT * FROM `product_images` WHERE `ProductID`=?";
         mysqlConnection.query(query,parseInt(productID),(err,result)=>{
             if(err){
                 return callback(err);
@@ -60,6 +60,16 @@ module.exports={
         }else{
             return callback(null,result);
         }
+        })
+    },
+    GetEditProduct:(ProductID,callback)=>{
+        var query="SELECT * FROM `products` WHERE `ID`=?";
+        mysqlConnection.query(query,[ProductID],(err,result)=>{
+            if(err){
+                return callback(err);
+            }else{
+                return callback(null,result[0]);
+            }
         })
     }
 }
